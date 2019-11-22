@@ -17,33 +17,42 @@ root = RootNode('root')
 dictionary = {("print", "hello"): PHActionServer('print_hello'),
               ("twist", "90"): T90ActionServer('twist_90')}
 
+
+def apply_op(operators, values):
+    operator = operators.pop()
+    right = values.pop()
+    left = values.pop()
+    node = None
+    if operator == "and":
+        node = ParallelNode("dummy", 2, 2)
+    elif operator == "or":
+        node = SelectorNode("dummy", 2, 2)
+    node.add_child(left)
+    node.add_child(right)
+    values.append(node)
+
+#get input      
 command = raw_input("Enter command: ").split()
 last_phrase = []
-stack = []
+
+#perform basic shunting yard
+values = []
+operators = []
 for word in command:
-    last_phrase.append(word)
-    if tuple(last_phrase) in dictionary:
-        stack.append(ClientNode("_".join(last_phrase)))
-        print("_".join(last_phrase))
+    if word == "and" or word == "or":
         last_phrase = []
-while len(stack) > 0:
-    root.add_child(stack.pop())
+        operators.append(word)
+    else:
+        last_phrase.append(word)
+        if tuple(last_phrase) in dictionary:
+            values.append(ClientNode("_".join(last_phrase)))
+            print("_".join(last_phrase))
+            last_phrase = []
 
-
-
-
-#if (command == "turn"):
-
-"""
-t_90 = T90ActionServer('twist_90')
-p_h = PHActionServer('print_hello')
-action1 = ClientNode('print_hello')
-action2 = ClientNode('twist_90')
-parallel1 = ParallelNode('talker', 2, 2)
-parallel1.add_child(action1)
-parallel1.add_child(action2)
-root.add_child(parallel1)
-"""
+while len(operators) > 0:
+    apply_op(operators, values)
+if values:
+    root.add_child(values.pop())
 
 rate = rospy.Rate(10)
 while not rospy.is_shutdown():
