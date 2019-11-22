@@ -1,0 +1,27 @@
+Demonstrates Parallel
+
+t_90 = T90ActionServer('twist_90')
+p_h = PHActionServer('print_hello')
+root = RootNode('root')
+action1 = ClientNode('print_hello')
+action2 = ClientNode('twist_90')
+parallel1 = ParallelNode('talker', 2, 2)
+parallel1.add_child(action1)
+parallel1.add_child(action2)
+root.add_child(parallel1)
+
+Dumb Roomba
+
+m_f = MFActionServer('move_forward')
+t_r = TRActionServer('twist_right')
+root = RootNode('root')
+action1 = ClientNode('move_forward')
+action2 = ClientNode('twist_right')
+sequence1 = SequenceNode('turn_at_wall')
+selector1 = SelectorNode('dumb_roomba')
+condition1 = WallCheckNode('wall_check')
+sequence1.add_child(condition1)
+sequence1.add_child(action2)
+selector1.add_child(sequence1)
+selector1.add_child(action1)
+root.add_child(selector1)
