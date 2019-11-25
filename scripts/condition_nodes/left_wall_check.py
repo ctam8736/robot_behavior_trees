@@ -1,23 +1,24 @@
 #! /usr/bin/env python
+
+"""
+Returns success tick if there is a wall to the robot's left.
+"""
+
 import rospy
 from sensor_msgs.msg import LaserScan
 
-"""
-Returns success tick if there is a wall in front of the robot.
-"""
-
-class WallCheckNode():
+class LeftWallCheckNode():
 
     def __init__(self, name):
         self.name = name
         self.laser_sub = rospy.Subscriber('/scan', LaserScan, self.laser_cb)
-        self.bearing_zero = 5
+        self.min_bearing_left = 5
 
     def laser_cb(self, msg):
-        self.bearing_zero = msg.ranges[0]
+        self.min_bearing_left = min(ranges[0:90])
 
     def tick(self):
-        if self.bearing_zero < .6:
+        if self.min_bearing_left < .4:
             return "success"
         return "failure"
 

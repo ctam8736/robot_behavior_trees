@@ -1,6 +1,10 @@
 #! /usr/bin/env python
 import rospy
 
+"""
+A node to be designated as the root of a behavior tree, with only one child.
+"""
+
 class RootNode():
 
     def __init__(self, name):

@@ -1,6 +1,10 @@
 #! /usr/bin/env python
-import rospy
 
+"""
+An auxillary node used to call action nodes indirectly.
+"""
+
+import rospy
 import actionlib
 from campus_rover_behavior_tree.msg import BTAction, BTGoal, BTFeedback, BTResult
 
@@ -19,9 +23,6 @@ class ClientNode():
             goal.parameter = 0
             self.client.send_goal(goal)
             return "running"
-            self.client.wait_for_result()
-            #print(self.name + " is done.")
-            return "success"
         elif self.status is "running":
             if self.client.get_result():
                 #print(self.name + " is done.")

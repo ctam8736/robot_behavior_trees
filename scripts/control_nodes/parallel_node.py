@@ -1,4 +1,9 @@
 #! /usr/bin/env python
+
+"""
+A control node that ticks children in parallel/synchronously.
+"""
+
 import rospy
 
 class ParallelNode():

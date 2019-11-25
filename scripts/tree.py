@@ -1,25 +1,25 @@
 #! /usr/bin/env python
+
+"""
+Example tree usage involving manual edge setup.
+"""
+
 import rospy
 
-from control_nodes.sequence_node import SequenceNode
-from control_nodes.selector_node import SelectorNode
-from control_nodes.parallel_node import ParallelNode
-from control_nodes.root_node import RootNode
-from action_nodes.twist_right import TRActionServer
-from action_nodes.move_forward import MFActionServer
-from action_nodes.client_node import ClientNode
-from condition_nodes.wall_check import WallCheckNode
+from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode
+from action_nodes import twist_right, move_forward
+from condition_nodes import wall_check
 
 rospy.init_node('tree')
-m_f = MFActionServer('move_forward')
-t_r = TRActionServer('twist_right')
+m_f = move_forward.ActionServer('move_forward')
+t_r = twist_right.ActionServer('twist_right')
 
 root = RootNode('root')
 action1 = ClientNode('move_forward')
 action2 = ClientNode('twist_right')
 sequence1 = SequenceNode('turn_at_wall')
 selector1 = SelectorNode('dumb_roomba')
-condition1 = WallCheckNode('wall_check')
+condition1 = wall_check.WallCheckNode('wall_check')
 
 sequence1.add_child(condition1)
 sequence1.add_child(action2)

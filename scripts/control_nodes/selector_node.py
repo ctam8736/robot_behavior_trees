@@ -1,4 +1,9 @@
 #! /usr/bin/env python
+
+"""
+A control node that ticks children sequentially, returning success tick when a single node returns success. (Can be thought of as an OR.)
+"""
+
 import rospy
 
 class SelectorNode():

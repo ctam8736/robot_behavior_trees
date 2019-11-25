@@ -1,4 +1,9 @@
 #! /usr/bin/env python
+
+"""
+A control node that ticks children sequentially, returning success tick only when all nodes return. (Can be thought of as an AND.)
+"""
+
 import rospy
 
 class SequenceNode():
