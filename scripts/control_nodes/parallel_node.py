@@ -12,6 +12,7 @@ class ParallelNode():
         self.children = []
         self.ns = ns
         self.nf = nf
+        self.name = name
 
     def tick(self):
         s = 0
