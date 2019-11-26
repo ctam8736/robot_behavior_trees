@@ -5,7 +5,7 @@ import rospy
 todo: node that returns the negation of its child (like NOT)
 """
 
-class RepeaterNode():
+class NegationNode():
 
     def __init__(self, name):
         self.child = None
@@ -13,7 +13,13 @@ class RepeaterNode():
 
     def tick(self):
         if self.child:
-            return self.child.tick()
+            status = self.child.tick()
+            if status == "running":
+                return status
+            if status == "success":
+                return "failure"
+            if status == "failure":
+                return "success"
 
     def reset(self):
         if self.child:

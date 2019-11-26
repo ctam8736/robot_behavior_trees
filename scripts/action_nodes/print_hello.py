@@ -13,7 +13,14 @@ class ActionServer(Action):
     Action.__init__(self, name)
 
   def do_action(self):
-    rate = rospy.Rate(3)
-    for i in range(10):
-      print("Hello!")
-      rate.sleep()
+    rate = rospy.Rate(5)
+    print("Hello!")
+    rate.sleep()
+
+  def execute_cb(self, goal):
+    rate = rospy.Rate(10)
+    success = True
+    for i in range(goal.parameter):
+      self.do_action()
+    if success:
+      self.set_status('SUCCESS')

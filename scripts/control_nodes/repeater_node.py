@@ -13,7 +13,11 @@ class RepeaterNode():
 
     def tick(self):
         if self.child:
-            return self.child.tick()
+            status = self.child.tick()
+            if status == "success":
+                self.reset()
+                self.child.tick()
+            return status
 
     def reset(self):
         if self.child:

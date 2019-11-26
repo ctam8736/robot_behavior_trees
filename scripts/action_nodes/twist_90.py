@@ -36,9 +36,9 @@ class ActionServer(Action):
         target += 2 * math.pi
 
     #keep spinning while within threshold
-    while(abs((target - self.current_yaw) * (180/math.pi)) > 1):
+    while(abs((target - self.current_yaw) * (180/math.pi)) > 2):
       turn_twist = Twist()
-      turn_twist.angular.z = -.4
+      turn_twist.angular.z = -.3
       self.cmd_vel_pub.publish(turn_twist)
 
     #stop robot

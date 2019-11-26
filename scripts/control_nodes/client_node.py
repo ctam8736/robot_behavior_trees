@@ -10,17 +10,19 @@ from campus_rover_behavior_tree.msg import BTAction, BTGoal, BTFeedback, BTResul
 
 class ClientNode():
 
-    def __init__(self, name):
+    def __init__(self, name, param = None):
         self.name = name
         self.client = actionlib.SimpleActionClient(self.name, BTAction)
         self.client.wait_for_server()
         self.status = "idle"
+        self.param = param
 
     def tick(self):
         if self.status is "idle":
             self.status = "running"
             goal = BTGoal()
-            goal.parameter = 0
+            if self.param:
+                goal.parameter = self.param
             self.client.send_goal(goal)
             return "running"
         elif self.status is "running":
