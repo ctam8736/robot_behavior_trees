@@ -20,7 +20,11 @@ class ActionServer(Action):
   def execute_cb(self, goal):
     rate = rospy.Rate(10)
     success = True
-    for i in range(goal.parameter):
-      self.do_action()
+    if goal.parameter:
+      for i in range(goal.parameter):
+        self.do_action()
+    else:
+      for i in range(10):
+        self.do_action()
     if success:
       self.set_status('SUCCESS')

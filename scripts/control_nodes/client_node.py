@@ -27,7 +27,6 @@ class ClientNode():
             return "running"
         elif self.status is "running":
             if self.client.get_result():
-                #print(self.name + " is done.")
                 return "success"
             return "running"
 

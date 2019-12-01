@@ -14,6 +14,7 @@ rospy.init_node('tree')
 m_f = move_forward.ActionServer('move_forward')
 t_r = twist_right.ActionServer('twist_right')
 
+#if wall in front, twist right, else move forward
 root = RootNode('root')
 action1 = ClientNode('move_forward')
 action2 = ClientNode('twist_right')
@@ -29,7 +30,8 @@ selector1.add_child(action1)
 
 root.add_child(selector1)
 
-rate = rospy.Rate(50)
+#repeatedly tick root
+rate = rospy.Rate(10)
 while not rospy.is_shutdown():
     status = root.tick()
     #print(root.name + " is " + status)

@@ -13,12 +13,9 @@ class SelectorNode():
         self.name = name
 
     def tick(self):
-        #print("---" + self.name + "-->start")
         for node in self.children:
             child_status = node.tick()
-            #print(node.name + " is " + child_status)
             if child_status == "running":
-                #print("---" + self.name + "-->end")
                 return "running"
             elif child_status == "success":
                 print("---" + self.name + "-->success")

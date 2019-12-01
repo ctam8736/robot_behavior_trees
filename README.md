@@ -6,6 +6,5 @@ For now, rosrun nlp.py from package for full functionality.
 
 TODO list:
     improve nlp with if statements and action arguments
-    tree visualization
     crROS integration
     easify condition nodes

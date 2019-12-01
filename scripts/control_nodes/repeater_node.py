@@ -2,7 +2,7 @@
 import rospy
 
 """
-todo: node that keeps calling child after success or failure is returned
+TODO: node that keeps calling child after success or failure is returned
 """
 
 class RepeaterNode():

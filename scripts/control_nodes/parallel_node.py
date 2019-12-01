@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 """
-A control node that ticks children in parallel/synchronously.
+A control node that ticks children in parallel/synchronously. Returns success or failure based on input thresholds.
 """
 
 import rospy

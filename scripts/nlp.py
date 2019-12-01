@@ -8,7 +8,7 @@ import rospy
 import sys
 
 from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode
-from action_nodes import twist_90, print_hello
+from action_nodes import twist_90, print_hello, navigate_rover
 #from condition_nodes import
 
 rospy.init_node('tree')
@@ -16,6 +16,7 @@ rospy.init_node('tree')
 #init all keywords
 dictionary = {("print", "hello"): print_hello.ActionServer('print_hello'),
               ("twist", "90"): twist_90.ActionServer('twist_90'),
+              ("go", "to", "lab"): navigate_rover.ActionServer("go_to_lab"),
               ("and", ): None,
               ("or", ): None,
               ("then", ): None
@@ -63,7 +64,7 @@ def construct_tree(command):
                 operators.append("".join(last_phrase))
                 print("".join(last_phrase) + " was recognized.")
             last_phrase = []
-        #check repeater arguments
+        #added: check repeater arguments
         if len(last_phrase) == 2 and unicode(last_phrase[0]).isnumeric() and last_phrase[1] == "times":
             old = values.pop()
             values.append(ClientNode(old.name, param = int(last_phrase[0])))
@@ -81,7 +82,7 @@ def construct_tree(command):
         print("Command failed to parse completely.")
         return False
 
-#console loop
+#console loop, tick root until success
 while not rospy.is_shutdown():
 
     root = RootNode('root')
