@@ -6,21 +6,41 @@ Modifiable command parser that asks for console input, constructs the correspond
 
 import rospy
 import sys
-
-from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode
+import json
+from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode, NavigationClientNode
 from action_nodes import twist_90, print_hello, navigate_rover
+from geometry_msgs.msg import Twist, Pose, Point, \
+    Quaternion, PoseStamped, Transform, Vector3, TransformStamped
+import os.path
 #from condition_nodes import
 
 rospy.init_node('tree')
 
+with open(os.path.dirname(__file__) + '/../info/basement_demo_waypoints.json') as json_file:
+    #data = json.load(json_file)
+    for key in json.load(json_file):
+        print(key)
+
+#init temporary coordinates
+lab_coordinates = PoseStamped()
+lab_coordinates.pose.position.x = 19.0380267163
+lab_coordinates.pose.position.y = 20.7569543047
+lab_coordinates.pose.position.z = 0.0
+lab_coordinates.pose.orientation.x = 0.0
+lab_coordinates.pose.orientation.y = 0.0
+lab_coordinates.pose.orientation.z = -0.211043131282
+lab_coordinates.pose.orientation.w = 0.977476749973
+
 #init all keywords
 dictionary = {("print", "hello"): print_hello.ActionServer('print_hello'),
               ("twist", "90"): twist_90.ActionServer('twist_90'),
-              ("go", "to", "lab"): navigate_rover.ActionServer("go_to_lab"),
+              ("go", "to", "lab"): lab_coordinates,
               ("and", ): None,
               ("or", ): None,
               ("then", ): None
               }
+
+
 
 #handle the next operation given value and op stack
 def apply_op(operators, values):
@@ -57,7 +77,14 @@ def construct_tree(command):
             rospy.signal_shutdown("Console terminated.")
         #recognize if string is a command or keyword I know
         if tuple(last_phrase) in dictionary:
-            if dictionary[tuple(last_phrase)]:
+            reference = dictionary[tuple(last_phrase)]
+            print(type(reference))
+            if isinstance(reference, PoseStamped):
+                #navigation action
+                values.append(NavigationClientNode("_".join(last_phrase), reference))
+                print("_".join(last_phrase) + " was recognized.")
+            elif reference:
+                #normal action
                 values.append(ClientNode("_".join(last_phrase)))
                 print("_".join(last_phrase) + " was recognized.")
             else:
