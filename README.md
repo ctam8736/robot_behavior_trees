@@ -8,3 +8,5 @@ TODO list:
     improve nlp with if statements and action arguments
     crROS integration
     easify condition nodes
+
+test
