@@ -16,10 +16,12 @@ import os.path
 
 rospy.init_node('tree')
 
+"""
 with open(os.path.dirname(__file__) + '/../info/basement_demo_waypoints.json') as json_file:
     #data = json.load(json_file)
     for key in json.load(json_file):
         print(key)
+"""
 
 #init temporary coordinates
 lab_coordinates = PoseStamped()
