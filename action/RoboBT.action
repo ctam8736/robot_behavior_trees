@@ -1,0 +1,12 @@
+#goal definition
+int32 base
+int32 x
+int32 y
+int32 speed
+---
+#result definition RUNNING = 0, SUCCESS = 1, FAILURE = 2
+int32 status
+int32 distance
+---
+#feedback
+int32 status 

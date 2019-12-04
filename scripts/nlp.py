@@ -8,7 +8,7 @@ import rospy
 import sys
 import json
 from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode, NavigationClientNode
-from action_nodes import twist_90, print_hello, navigate_rover
+from action_nodes import twist_90, print_hello, navigate_rover, robot_actions
 from geometry_msgs.msg import Twist, Pose, Point, \
     Quaternion, PoseStamped, Transform, Vector3, TransformStamped
 import os.path
@@ -37,6 +37,8 @@ lab_coordinates.pose.orientation.w = 0.977476749973
 dictionary = {("print", "hello"): print_hello.ActionServer('print_hello'),
               ("twist", "90"): twist_90.ActionServer('twist_90'),
               ("go", "to", "lab"): lab_coordinates,
+              ("open", "hand"): robot_actions.OpenHandServer('open_hand'),
+              ("close", "hand"): robot_actions.CloseHandServer('close_hand'),
               ("and", ): None,
               ("or", ): None,
               ("then", ): None
