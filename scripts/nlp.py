@@ -7,7 +7,7 @@ Modifiable command parser that asks for console input, constructs the correspond
 import rospy
 import sys
 import json
-from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode, NavigationClientNode
+from control_nodes import SequenceNode, SelectorNode, ParallelNode, RootNode, ClientNode, NavigationClientNode, RepeaterNode
 from action_nodes import twist_90, print_hello, navigate_rover, robot_actions
 from geometry_msgs.msg import Twist, Pose, Point, \
     Quaternion, PoseStamped, Transform, Vector3, TransformStamped
@@ -39,9 +39,12 @@ dictionary = {("print", "hello"): print_hello.ActionServer('print_hello'),
               ("go", "to", "lab"): lab_coordinates,
               ("open", "hand"): robot_actions.OpenHandServer('open_hand'),
               ("close", "hand"): robot_actions.CloseHandServer('close_hand'),
+              ("retract", "arm"): robot_actions.RetractArmServer('retract_arm'),
               ("and", ): None,
               ("or", ): None,
-              ("then", ): None
+              ("then", ): None,
+              ("repeat", ): None,
+              ("if", ): None
               }
 
 
@@ -51,22 +54,29 @@ def apply_op(operators, values):
     operator = operators.pop()
     node = None
     #handle binary operations
-    if operator == "and" or operator == "or" or operator == "then":
+    if operator == "and" or operator == "or" or operator == "then" or operator == "if":
         if operator == "and":
             node = ParallelNode("dummy", 2, 2)
         elif operator == "or":
             node = SelectorNode("dummy")
-        elif operator == "then":
+        elif operator == "then" or operator == "if":
             node = SequenceNode("dummy")
         right = values.pop()
         left = values.pop()
         node.add_child(left)
         node.add_child(right)
         values.append(node)
+    if operator == "repeat":
+        child = values.pop()
+        node = RepeaterNode("dummy")
+        node.add_child(child)
+        values.append(node)
 
 #parses console input and adds computed behavior tree to root
 def construct_tree(command):
     global dictionary, root
+
+
 
     last_phrase = []
 

@@ -35,3 +35,27 @@ class CloseHandServer(Action):
     print("publishing...")
     self.pub.publish(command)
     time.sleep(4)
+
+class RetractArmServer(Action):
+
+  def __init__(self, name):
+    Action.__init__(self, name)
+    self.pub = rospy.Publisher('armcommand', String, queue_size=10)
+
+  def do_action(self):
+    command = "ARM 0 330 0 20 \n"
+    print("publishing...")
+    self.pub.publish(command)
+    time.sleep(4)
+
+class MoveArmServer(Action):
+
+  def __init__(self, name, base, x, y, speed):
+    Action.__init__(self, name)
+    self.pub = rospy.Publisher('armcommand', String, queue_size=10)
+
+  def do_action(self):
+    command = "MANIP " + str(base) + " " + str(x) + " " + str(y) + " " + str(speed) + " \n"
+    print("publishing...")
+    self.pub.publish(command)
+    time.sleep(4)
