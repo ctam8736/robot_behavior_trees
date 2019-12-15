@@ -39,9 +39,9 @@ class SequenceNode():
             if child_status == "running":
                 return "running"
             elif child_status == "failure":
-                print("---" + self.name + "-->failure")
+                #print("---" + self.name + "-->failure")
                 return "failure"
-        print("---" + self.name + "-->success")
+        #print("---" + self.name + "-->success")
         return "success"
 
     def reset(self):
@@ -67,9 +67,9 @@ class SelectorNode():
             if child_status == "running":
                 return "running"
             elif child_status == "success":
-                print("---" + self.name + "-->success")
+                #print("---" + self.name + "-->success")
                 return "success"
-        print("---" + self.name + "-->failure")
+        #print("---" + self.name + "-->failure")
         return "failure"
 
     def reset(self):

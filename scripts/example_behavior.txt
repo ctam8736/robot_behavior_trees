@@ -1,0 +1,3 @@
+greet is print hello and twist 90
+meet wall is if wall in front print hello
+repeat meet wall or move forward
