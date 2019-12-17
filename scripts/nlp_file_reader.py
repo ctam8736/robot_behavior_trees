@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Modifiable command parser that asks for console input, constructs the corresponding behavior tree, and executes it.
+Modifiable command parser that reads in the file example_behavior.txt, constructs the corresponding behavior trees, and executes the last root.
 """
 
 from __future__ import print_function
