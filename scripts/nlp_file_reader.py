@@ -38,6 +38,8 @@ dictionary = {("print", "hello"): print_hello.ActionServer('print_hello'),
               ("retract", "arm"): robot_actions.RetractArmServer('retract_arm'),
               ("move", "forward"): movement_actions.MoveForwardServer('move_forward'),
               ("move", "backward"): movement_actions.MoveBackwardServer('move_backward'),
+              ("turn", "right"): movement_actions.TurnRightServer('turn_right'),
+              ("turn", "left"): movement_actions.TurnLeftServer('turn_left'),
 
               ("wall", "in", "front"): wall_check.WallCheckNode('wall_in_front'),
 

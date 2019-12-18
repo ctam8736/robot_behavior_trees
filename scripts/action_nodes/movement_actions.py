@@ -14,9 +14,9 @@ class MoveForwardServer(Action):
     self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
   def do_action(self):
-    rate = rospy.Rate(.5)
+    rate = rospy.Rate(.6)
     move_twist = Twist()
-    move_twist.linear.x = .2
+    move_twist.linear.x = .18
     self.cmd_vel_pub.publish(move_twist)
     rate.sleep()
     self.cmd_vel_pub.publish(Twist())
@@ -28,9 +28,9 @@ class MoveBackwardServer(Action):
     self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
   def do_action(self):
-    rate = rospy.Rate(.5)
+    rate = rospy.Rate(.6)
     move_twist = Twist()
-    move_twist.linear.x = -.2
+    move_twist.linear.x = -.18
     self.cmd_vel_pub.publish(move_twist)
     rate.sleep()
     self.cmd_vel_pub.publish(Twist())
@@ -44,7 +44,7 @@ class TurnRightServer(Action):
   def do_action(self):
     rate = rospy.Rate(.5)
     move_twist = Twist()
-    move_twist.angualar.x = -.5
+    move_twist.angular.z = -1
     self.cmd_vel_pub.publish(move_twist)
     rate.sleep()
     self.cmd_vel_pub.publish(Twist())
@@ -58,7 +58,7 @@ class TurnLeftServer(Action):
   def do_action(self):
     rate = rospy.Rate(.5)
     move_twist = Twist()
-    move_twist.angualar.x = .5
+    move_twist.angular.z = 1
     self.cmd_vel_pub.publish(move_twist)
     rate.sleep()
     self.cmd_vel_pub.publish(Twist())

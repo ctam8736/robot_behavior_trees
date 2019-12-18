@@ -1,3 +1,6 @@
-greet is print hello and twist 90
 meet wall is if wall in front print hello
-repeat meet wall or move forward
+avoid wall is if wall in front turn left
+do the twist is turn right then turn left
+angle right is move forward then turn right
+angle left is move forward then turn left
+do the twist then repeat avoid wall or move forward
